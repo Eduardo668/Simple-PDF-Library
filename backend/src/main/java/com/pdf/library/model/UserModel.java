@@ -1,8 +1,10 @@
 package com.pdf.library.model;
 
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -21,6 +23,7 @@ import java.util.List;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username", "email"})
 })
+
 public class UserModel implements Serializable {
 
     private static final long serialVersionUID = 12_345_091_123L;
@@ -46,11 +49,9 @@ public class UserModel implements Serializable {
     @Column(columnDefinition = "integer default 0")
     private Long totalDownloads;
 
-    private List<UUID> favoritePosts;
-
-    // orphanRemovel significa que quando o Post não estiver relacionado com o user ele sera deletado
+    // orphanRemoval significa que quando o Post não estiver relacionado com o user ele sera deletado
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostModel> postFiles;
+    private List<PostModel> posts;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -71,5 +72,19 @@ public class UserModel implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-
+    // Constructor for testing
+    @VisibleForTesting
+    public UserModel(String username, String email, String password,
+                     Long totalDownloads, List<PostModel> posts, List<RoleModel> roles,
+                     List<FavoriteModel> favorites, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.totalDownloads = totalDownloads;
+        this.posts = posts;
+        this.roles = roles;
+        this.favorites = favorites;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

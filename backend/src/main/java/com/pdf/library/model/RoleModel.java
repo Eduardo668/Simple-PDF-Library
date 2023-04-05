@@ -1,7 +1,9 @@
 package com.pdf.library.model;
 
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ public class RoleModel {
 
     @NotBlank
     @Size(max = 100)
+    @Pattern(regexp = "^[A-Z_]+$") // Allow only Upper case letters and underline
     private String name;
 
     @Column(name = "created_at")
@@ -34,5 +37,11 @@ public class RoleModel {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-
+    //Constructor for test
+    @VisibleForTesting
+    public RoleModel(String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.name = name;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

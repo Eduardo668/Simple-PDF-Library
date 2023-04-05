@@ -1,5 +1,6 @@
 package com.pdf.library.model;
 
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -38,7 +39,8 @@ public class PostModel implements Serializable {
     @NotNull
     private Long pages;
 
-    @NotNull
+    @NotBlank
+    @Size(max = 50)
     private String size;
 
     @NotNull
@@ -61,5 +63,19 @@ public class PostModel implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-
+    // Constructor for testing
+    @VisibleForTesting
+    public PostModel(String title, Long totalDownloads, Long pages, String size,
+                     FileModel file, UserModel user, List<FavoriteModel> favorites,
+                     LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.title = title;
+        this.totalDownloads = totalDownloads;
+        this.pages = pages;
+        this.size = size;
+        this.file = file;
+        this.user = user;
+        this.favorites = favorites;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

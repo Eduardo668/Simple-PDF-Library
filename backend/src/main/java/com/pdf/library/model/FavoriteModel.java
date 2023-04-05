@@ -1,5 +1,6 @@
 package com.pdf.library.model;
 
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,4 +40,12 @@ public class FavoriteModel implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    // Constructor for test
+    @VisibleForTesting
+    public FavoriteModel (UserModel user, PostModel post, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.user = user;
+        this.post = post;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

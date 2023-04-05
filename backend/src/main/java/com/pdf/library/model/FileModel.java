@@ -1,5 +1,6 @@
 package com.pdf.library.model;
 
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -44,5 +45,14 @@ public class FileModel implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-
+    // Constructor for test
+    @VisibleForTesting
+    public FileModel(String name, String path, PostModel postModel,
+                     LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.name = name;
+        this.path = path;
+        this.postModel = postModel;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
